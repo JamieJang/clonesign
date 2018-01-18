@@ -1,11 +1,19 @@
 {% extends 'user/base.html' %}
 
 {% block content %}
-<h2>회원가입</h2>
+<div class="signup-form">
+    <h2>회원가입</h2>
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_ul }}
-</form>
+    <form method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="signup-input">
+                <span>{{ field.label }}</span>
+                {{ field }}
+            </div>
+        {% endfor %}
+        <input type="submit" value="회원가입" />
+    </form>
+</div>
 
 {% endblock %}

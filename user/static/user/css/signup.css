@@ -1,0 +1,27 @@
+.signup-form{
+    width: 400px;
+    height: 100%;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.signup-input{
+    width: 400px;
+    display: flex;
+    align-items: center;
+    margin: 15px;
+}
+.signup-input span{
+    width: 33%;
+}
+.signup-input input{
+    width: 66%;
+}
