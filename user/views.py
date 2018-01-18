@@ -14,6 +14,8 @@ from .tokens import account_activation_token
 
 class signup(View):
     def get(self,request):
+        if request.user.is_authenticated:
+            return redirect("document:docu-index")
         form = SignupForm()
         return render(request, 'user/signup.html', {"form":form})
 
