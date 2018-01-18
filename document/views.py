@@ -4,7 +4,7 @@ from django.http import HttpResponse
 
 class index(View):
     def get(self,request):
-
         if not request.user.is_authenticated:
             return redirect("/")
-        return HttpResponse("DOCUMENT")
+
+        return render(request, 'document/index.html')

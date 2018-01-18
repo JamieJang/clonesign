@@ -1,0 +1,19 @@
+{% extends 'document/base.html' %}
+{% load staticfiles %}
+
+{% block title %}Document{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'document/css/main.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+    <div class="document-wrap">
+        {% include 'document/sidebar.html' %}
+        <div class="main-page">
+             문서 리스트 나열 할 부분
+        </div>
+    </div>
+
+{% endblock %}
