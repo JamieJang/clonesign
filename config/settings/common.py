@@ -139,3 +139,5 @@ EMAIL_HOST_USER = 'jamiejang0891@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 SERVER_EMAIL = 'jamiejang0891@gmail.com'
 DEFAULT_FROM_MAIL = 'django_Developer'
+
+LOGIN_REDIRECT_URL = 'document:docu-index'

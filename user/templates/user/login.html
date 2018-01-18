@@ -1,0 +1,16 @@
+{% extends 'user/base.html' %} {% block content %}
+<div class="signup-form">
+    <h2>로그인</h2>
+
+    <form method="POST">
+        {% csrf_token %} {% for field in form %}
+        <div class="signup-input">
+            <span>{{ field.label }}</span>
+            {{ field }}
+        </div>
+        {% endfor %}
+        <input type="submit" value="로그인" />
+    </form>
+</div>
+
+{% endblock %}

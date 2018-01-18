@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 
 from .models import MyUser as User
-from .forms import SignupForm
+from .forms import SignupForm, LoginForm
 from .tokens import account_activation_token
 
 class signup(View):
@@ -39,6 +39,7 @@ class signup(View):
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
             return render(request, 'user/confirm_email_sent.html')
+        print(form.error_messages)
 
 
 def activate(request, uidb64, token):
