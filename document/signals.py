@@ -2,6 +2,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 import os
+from django.core.mail import EmailMessage
 
 from . import models
 
@@ -16,3 +17,12 @@ def change_upload_docs(sender,**kwargs):
         conv = origin.split(".")[0] + ".pdf"        
         document.docs = "/".join(conv.split("/")[-6:])
         document.save()
+
+    partners = document.partners.all()
+    emails = []
+    message = "다음 계약서가 도착했습니다.\n http://localhost:8000{}".format(document.docs.url)
+    if partners:
+        for partner in partners:
+            emails.append(partner.email)
+        EmailMessage('새로운 계약서', message, to=emails).send()
+    
