@@ -35,9 +35,14 @@ class Document(Timestamp):
 
     creator = models.ForeignKey(user_models.MyUser, on_delete=models.CASCADE, related_name="docs_myself")
     docs = models.FileField(upload_to=generate_filename)
-    parters = models.ManyToManyField(user_models.MyUser,related_name="docs_by_partners")
+    partners = models.ManyToManyField(user_models.MyUser,related_name="docs_by_partners")
     status = models.CharField(max_length=50, choices=STATUS_LIST, default=STATUS_LIST[0])
     folder = models.ForeignKey(Folder,on_delete=models.CASCADE,null=True,blank=True)
 
     def __str__(self):
         return "{} / {} / {}".format(self.docs, self.status, self.creator)
+
+    @property
+    def get_filename(self):
+        name = self.docs.name.split('/')[-1]
+        return name
