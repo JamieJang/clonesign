@@ -26,7 +26,14 @@ class index(View):
 class UploadDocs(View):
     def get(self, request):
         form = forms.DocsForm()
-        return render(request, 'document/upload.html', {"form":form})
+        user = request.user
+        self_docs = user.self_docs_count
+        part_docs = user.part_docs_count
+        total_docs = self_docs + part_docs
+        return render(request, 'document/upload.html', {'total_docs': total_docs,
+                                                        'self_docs': self_docs,
+                                                        'part_docs': part_docs, 
+                                                        "form": form})
 
     def post(self,request):
         partners = request.POST['partners']
