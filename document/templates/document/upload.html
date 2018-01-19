@@ -1,0 +1,21 @@
+{% extends 'document/base.html' %}
+{% load staticfiles %}
+
+{% block title %}Upload{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block pageName %}업로드{% endblock %}
+{% block pageInfo %}문서 업로드{% endblock %}
+
+{% block content %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_ul }}
+        <input type="submit" value="업로드" />
+    </form>
+
+{% endblock %}

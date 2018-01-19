@@ -36,7 +36,7 @@ class Document(Timestamp):
     creator = models.ForeignKey(user_models.MyUser, on_delete=models.CASCADE, related_name="docs_myself")
     docs = models.FileField(upload_to=generate_filename)
     partners = models.ManyToManyField(user_models.MyUser,related_name="docs_by_partners")
-    status = models.CharField(max_length=50, choices=STATUS_LIST, default=STATUS_LIST[0])
+    status = models.CharField(max_length=50, choices=STATUS_LIST, default=STATUS_LIST[0][0])
     folder = models.ForeignKey(Folder,on_delete=models.CASCADE,null=True,blank=True)
 
     def __str__(self):
