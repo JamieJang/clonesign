@@ -15,8 +15,8 @@ class index(View):
         self_docs = user.self_docs_count
         part_docs = user.part_docs_count
         total_docs = self_docs + part_docs
-        docs = models.Document.objects.filter(creator=user)
-
+        docs = list(models.Document.objects.filter(creator=user))
+        docs += list(user.docs_by_partners.all())
 
         return render(request, 'document/index.html',{'total_docs':total_docs,
                                                         'self_docs':self_docs,
@@ -42,3 +42,36 @@ class UploadDocs(View):
         new_docs.save()
 
         return redirect("document:docu-index")
+
+
+class selfDocs(View):
+    def get(self,request):
+        if not request.user.is_authenticated:
+            return redirect("/")
+
+        user = request.user
+        self_docs = user.self_docs_count
+        part_docs = user.part_docs_count
+        total_docs = self_docs + part_docs
+        docs = models.Document.objects.filter(creator=user)
+
+        return render(request, 'document/index.html', {'total_docs': total_docs,
+                                                       'self_docs': self_docs,
+                                                       'part_docs': part_docs,
+                                                       'docs': docs})
+
+class docsByPartner(View):
+    def get(self,request):
+        if not request.user.is_authenticated:
+            return redirect("/")
+
+        user = request.user
+        self_docs = user.self_docs_count
+        part_docs = user.part_docs_count
+        total_docs = self_docs + part_docs
+        docs = user.docs_by_partners.all()
+
+        return render(request, 'document/index.html',{'total_docs':total_docs,
+                                                        'self_docs':self_docs,
+                                                        'part_docs':part_docs,
+                                                        'docs':docs})

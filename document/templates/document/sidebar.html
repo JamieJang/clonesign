@@ -9,8 +9,10 @@
         <div class="total-num">
             <div class="username">{{ user.username }}님</div>
             <div class="count">총 계약서: {{ total_docs }}</div>
-            <div class="count">내 계약서: {{ self_docs }}</div>
-            <div class="count">참여 한 계약서: {{ part_docs }}</div>
+            <div class="count">내 계약서: 
+                <a href="{% url 'document:self-docs' %}">{{ self_docs }}</a></div>
+            <div class="count">참여 한 계약서: 
+                <a href="{% url 'document:docs-by-partner' %}">{{ part_docs }}</a></div>
         </div>
     </div>
     <div class="menu">
