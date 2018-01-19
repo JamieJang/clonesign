@@ -7,12 +7,14 @@
     </div>
     <div class="status">
         <div class="total-num">
-            <div style="margin-bottom:4px">{{ user.username }}님</div>
-            <div>총 계약서: 3건</div>
+            <div class="username">{{ user.username }}님</div>
+            <div class="count">총 계약서: {{ total_docs }}</div>
+            <div class="count">내 계약서: {{ self_docs }}</div>
+            <div class="count">참여 한 계약서: {{ part_docs }}</div>
         </div>
     </div>
     <div class="menu">
-        <div active><a href="#">내 문서</a></div>
+        <div active><a href="{% url 'document:docu-index' %}">내 문서</a></div>
         <div><a href="#">내 서명</a></div>
         <div><a href="#">내 정보</a></div>
     </div>

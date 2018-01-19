@@ -4,16 +4,58 @@
 {% block title %}Document{% endblock %}
 
 {% block style %}
-<link rel="stylesheet" href="{% static 'document/css/main.css' %}" />
+<link rel="stylesheet" href="{% static 'document/css/mydocs.css' %}" />
 {% endblock %}
+
+{% block pageName %}내 문서{% endblock %}
+{% block pageInfo %}저장된 문서를 보여줍니다{% endblock %}
 
 {% block content %}
 
-    <div class="document-wrap">
-        {% include 'document/sidebar.html' %}
-        <div class="main-page">
-             문서 리스트 나열 할 부분
+    <div class="docs-menu">
+    </div>
+
+    <div class="docs-table">
+        <div class="docs-list section">
+            <div class="state-sec">
+                상태
+            </div>
+            <div class="name-sec">
+                문서 이름
+            </div>
+            <div class="folder-sec">
+                폴더
+            </div>
+            <div class="partner-sec">
+                서명참여자
+            </div>
+            <div class="time-sec">
+                마지막 활동 시간
+            </div>
         </div>
+        {% for doc in docs %}
+        <div class="docs-list">
+            <div class="state-sec">
+                {{doc.status}}
+            </div>
+            <div class="name-sec">
+                <a href="{{ doc.docs.url }}">{{doc.get_filename}}</a>
+            </div>
+            <div class="folder-sec">
+                {% if doc.folder %}
+                {{doc.folder}}
+                {% endif %}
+            </div>
+            <div class="partner-sec">
+                {% for p in doc.partners.all %}
+                    <div>{{ p.username }}</div>
+                {% endfor %}
+            </div>
+            <div class="time-sec">
+                {{doc.updated_at|date:"Y/m/d H:i:s"}}
+            </div>
+        </div>
+        {% endfor %}
     </div>
 
 {% endblock %}

@@ -1,0 +1,35 @@
+.docs-menu{
+    height: 150px;
+}
+.docs-table{
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+}
+.docs-list{
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom:1px solid rgb(203, 207, 214);
+}
+.section{
+    font-weight: 600;
+}
+.state-sec{
+    flex:1;
+}
+.name-sec{
+    flex:3;
+}
+.folder-sec{
+    flex:1;
+}
+.partner-sec{
+    flex:1;
+}
+.time-sec{
+    flex:1;
+}
