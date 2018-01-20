@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
 from django.db.models import Q
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
 
 from . import models, forms
 from user import models as user_models
@@ -146,3 +149,67 @@ class docsByKeyword(View):
                                                        'docs': docs,
                                                        'status_list': status_list,
                                                        "default_status": default_status})
+
+class Profile(View):
+    def get(self,request):
+        user = request.user
+        self_docs = user.self_docs_count
+        part_docs = user.part_docs_count
+        total_docs = self_docs + part_docs
+
+        password_form = PasswordChangeForm(user)
+
+        return render(request, 'document/profile.html', {'total_docs': total_docs,
+                                                         'self_docs': self_docs,
+                                                         'part_docs': part_docs, 
+                                                         'user':user,
+                                                         'password_form':password_form})
+
+class ChangeUsername(View):
+    def post(self,request):
+        user = request.user
+        self_docs = user.self_docs_count
+        part_docs = user.part_docs_count
+        total_docs = self_docs + part_docs
+        
+        password_form = PasswordChangeForm(user)
+
+        new_username = request.POST['username']
+        if new_username:
+            print(user.username)
+            user.username = new_username
+            print(user.username)
+            user.save()
+            messages.success(request, "이름을 성공적으로 변경하였습니다.")
+            return redirect("document:profile")
+        else:
+            message.error(request, "다시 시도해주기시 바랍니다.")
+        
+        return render(request, 'document/profile.html', {'total_docs': total_docs,
+                                                         'self_docs': self_docs,
+                                                         'part_docs': part_docs,
+                                                         'user': user,
+                                                         'password_form': password_form})
+
+        
+
+class ChangePassword(View):
+    def post(self,request):
+        user = request.user
+        self_docs = user.self_docs_count
+        part_docs = user.part_docs_count
+        total_docs = self_docs + part_docs
+        password_form = PasswordChangeForm(user,request.POST)
+        if password_form.is_valid():
+            changed_user = password_form.save()
+            update_session_auth_hash(request, changed_user)
+            messages.success(request,"비밀번호를 성공적으로 변경하였습니다.")
+            return redirect("document:profile")
+        else:
+            messages.error(request,"다시 시도해주시기 바랍니다.")
+        
+        return render(request, 'document/profile.html', {'total_docs': total_docs,
+                                                         'self_docs': self_docs,
+                                                         'part_docs': part_docs,
+                                                         'user': user,
+                                                         'password_form': password_form})

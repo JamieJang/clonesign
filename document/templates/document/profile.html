@@ -1,0 +1,57 @@
+{% extends 'document/base.html' %}
+{% load staticfiles %}
+
+{% block title %}Profile{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'document/css/profile.css' %}" />
+{% endblock %}
+
+{% block pageName %}내 정보{% endblock %}
+{% block pageInfo %}회원정보 확인 및 수정{% endblock %}
+
+{% block content %}
+<div class="profile">
+    <div class="profile-info">
+        <div class="title">프로필</div>
+        <div class="info">
+            <form method="POST" action="{% url 'document:userinfo' %}" id="change-info">
+                {% csrf_token %}
+                <label>이름</label>
+                <input type="text" value="{{user.username}}" id="username" name="username" />
+                <label>이메일</label>
+                <input type="email" value="{{user.email}}" id="email" disabled />
+                <input type="submit" id="username-change" value="저장하기" id="name-change" onclick="changeUsername()" />
+            </form>
+        </div>
+    </div>
+    <div class="pw-info">
+        <div class="title">비밀번호 변경</div>
+        <div class="info">
+            <form method="POST" action="{% url 'document:change_password' %}" id="change-info">
+                {% csrf_token %}
+                <input type="password" name="old_password" autofocus="" required="" id="id_old_password" placeholder="기존 비밀번호" />
+                <input type="password" name="new_password1" required="" id="id_new_password1" placeholder="새 비밀번호" />
+                <input type="password" name="new_password2" required="" id="id_new_password2" placeholder="새 비밀번호 확인" />
+                <input type="submit" value="변경" />
+            </form>
+        </div>
+    </div>
+</div>
+<div class="messages">
+    {% if messages %}
+        {% for message in messages %}
+        <span class="{{ message.tags }}">{{ message }}</span>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    changeUsername = () => {
+        var username = document.getElementById("username").value;
+        console.log(username);
+    }
+</script>
+{% endblock %}

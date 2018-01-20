@@ -12,4 +12,7 @@ urlpatterns =[
     url(r'^filter/status/(?P<status>[\w\W]+)/$',views.docsByStatus.as_view(),name="filter_by_status"),
     url(r'^search/(?P<keyword>[ㄱ-힣\w]+)/$',
         views.docsByKeyword.as_view(), name="search_keyword"),
+    url(r'^profile/$',views.Profile.as_view(),name="profile"),
+    url(r'^userinfo/$',views.ChangeUsername.as_view(), name="userinfo"),
+    url(r'^password/$',views.ChangePassword.as_view(),name="change_password"),
 ]
