@@ -13,6 +13,15 @@
 {% block content %}
 
     <div class="docs-menu">
+        <select id="status-list" onchange="filterByStatus()">
+            <option value="{{default_status}}">{{default_status}}</option>
+            {% for status in status_list %}
+            <option value="{{status}}">{{status}}</option>
+            {% endfor %}
+        </select>
+        <div class="search-keyword">
+            <input id="keyword" type="text" placeholder="키워드 검색" />
+        </div>
     </div>
 
     <div class="docs-table">
@@ -26,6 +35,9 @@
             <div class="folder-sec">
                 폴더
             </div>
+            <div class="creator-sec">
+                서명요청자
+            </div>
             <div class="partner-sec">
                 서명참여자
             </div>
@@ -33,29 +45,58 @@
                 마지막 활동 시간
             </div>
         </div>
-        {% for doc in docs %}
-        <div class="docs-list">
-            <div class="state-sec">
-                {{doc.status}}
+        {% if docs %}
+            {% for doc in docs %}
+            <div class="docs-list">
+                <div class="state-sec">
+                    {{doc.status}}
+                </div>
+                <div class="name-sec">
+                    <a href="{{ doc.docs.url }}">{{doc.filename}}</a>
+                </div>
+                <div class="folder-sec">
+                    {% if doc.folder %}
+                    {{doc.folder}}
+                    {% endif %}
+                </div>
+                <div class="creator-sec">
+                    {{doc.creator.username}}
+                </div>
+                <div class="partner-sec">
+                    {% for p in doc.partners.all %}
+                        <div>{{ p.username }}</div>
+                    {% endfor %}
+                </div>
+                <div class="time-sec">
+                    {{doc.updated_at|date:"Y/m/d H:i:s"}}
+                </div>
             </div>
-            <div class="name-sec">
-                <a href="{{ doc.docs.url }}">{{doc.get_filename}}</a>
+            {% endfor %}
+        {% else %}
+            <div class='docs-list'>
+                결과없음
             </div>
-            <div class="folder-sec">
-                {% if doc.folder %}
-                {{doc.folder}}
-                {% endif %}
-            </div>
-            <div class="partner-sec">
-                {% for p in doc.partners.all %}
-                    <div>{{ p.username }}</div>
-                {% endfor %}
-            </div>
-            <div class="time-sec">
-                {{doc.updated_at|date:"Y/m/d H:i:s"}}
-            </div>
-        </div>
-        {% endfor %}
+        {% endif %}
     </div>
 
+{% endblock %}
+
+{% block script %}
+<script>
+    filterByStatus = () => {
+        var inputBox = document.getElementById("status-list");
+        var status = inputBox.options[inputBox.selectedIndex].value;
+        status = status.replace(/ /gi, "-"); 
+        var url = `/document/filter/status/${status}`;
+        window.location.href = url;
+    };
+    $("#keyword").keypress( e => {
+        if(e.which === 13){
+            var searchBox = document.getElementById("keyword");
+            var keyword = searchBox.value;
+            var url = `/document/search/${keyword}`;
+            window.location.href = url;
+        }
+    });
+</script>
 {% endblock %}

@@ -1,5 +1,22 @@
 .docs-menu{
-    height: 150px;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+#status-list{
+    height: 30px;
+    padding-left: 10px;
+    font-size: 18px;
+    border-radius: 3px;
+}
+.search-keyword input{
+    height: 30px;
+    padding-left: 10px;
+    font-size: 18px;
+    border-radius: 3px;
+    margin-left: 5px;
 }
 .docs-table{
     width: 100%;
@@ -22,9 +39,12 @@
     flex:1;
 }
 .name-sec{
-    flex:3;
+    flex:2;
 }
 .folder-sec{
+    flex:1;
+}
+.creator-sec{
     flex:1;
 }
 .partner-sec{

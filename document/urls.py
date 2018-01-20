@@ -9,4 +9,7 @@ urlpatterns =[
     url(r'^upload/$',views.UploadDocs.as_view(),name="upload-docs"),
     url(r'^self/$',views.selfDocs.as_view(),name="self-docs"),
     url(r'^by_partner/$', views.docsByPartner.as_view(), name="docs-by-partner"),
+    url(r'^filter/status/(?P<status>[\w\W]+)/$',views.docsByStatus.as_view(),name="filter_by_status"),
+    url(r'^search/(?P<keyword>[ㄱ-힣\w]+)/$',
+        views.docsByKeyword.as_view(), name="search_keyword"),
 ]
