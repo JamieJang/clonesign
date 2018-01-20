@@ -1,0 +1,25 @@
+.upload-form{
+    width: 200px;
+    display: flex;
+    margin-top: 2rem;
+}
+.upload-form form{
+    width: 100%;
+}
+.docs input{
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.partner{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.partner input{
+    margin-bottom: 10px;
+    height: 30px;
+    border-radius: 4px;
+}
+.submit{
+    font-size: 20px;
+}

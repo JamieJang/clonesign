@@ -36,16 +36,15 @@ class UploadDocs(View):
                                                         "form": form})
 
     def post(self,request):
-        partners = request.POST['partners']
-        print(partners)
         docs = request.FILES['docs']
         user = request.user
         new_docs = models.Document(creator=user, docs=docs)
         new_docs.save()
 
-        for i in partners:
-            partner = user_models.MyUser.objects.get(pk=i)
-            new_docs.partners.add(partner)
+        name = request.POST['username']
+        email = request.POST['email']
+        partner = user_models.MyUser.objects.get(username=name,email=email)
+        new_docs.partners.add(partner)
         new_docs.save()
 
         return redirect("document:docu-index")

@@ -4,18 +4,24 @@
 {% block title %}Upload{% endblock %}
 
 {% block style %}
-
+<link rel="stylesheet" href="{% static 'document/css/upload.css' %}" />
 {% endblock %}
 
 {% block pageName %}업로드{% endblock %}
 {% block pageInfo %}문서 업로드{% endblock %}
 
 {% block content %}
-
+<div class="upload-form">
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_ul }}
-        <input type="submit" value="업로드" />
+        <div class="docs">
+            <input type="file" name="docs" required="" id="id_docs" />
+        </div>
+        <div class="partner">
+            <input type="text" name="username" required="" placeholder="이름" />
+            <input type="email" name="email" required="" placeholder="이메일" />
+        </div>
+        <input class="submit" type="submit" value="업로드" />
     </form>
-
+</div>
 {% endblock %}
