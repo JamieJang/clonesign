@@ -1,0 +1,90 @@
+{% extends 'document/base.html' %}
+{% load staticfiles %}
+
+{% block title %}Document{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'document/css/mydocs.css' %}" />
+{% endblock %}
+
+{% block pageName %}내 템플릿{% endblock %}
+{% block pageInfo %}생성한 템플릿{% endblock %}
+
+{% block content %}
+    
+    {% if messages %}
+        {% for msg in messages %}
+        <span class="{{ message.tags }}">{{ message }}</span>
+        {% endfor %}
+    {% endif %}
+
+    <div class="docs-table">
+        <div class="docs-list section">
+           
+            <div class="name-sec">
+                문서 이름
+            </div>
+            <div class="creator-sec">
+                서명요청자
+            </div>
+            <div class="partner-sec">
+                서명참여자
+            </div>
+            <div class="time-sec">
+                마지막 활동 시간
+            </div>
+        </div>
+        {% if temps %}
+        {% for temp in temps %}
+            <div class="docs-list" onclick="showDelete(this)">
+                
+                <div class="name-sec">
+                    <a href="#">{{temp.title}}</a>
+                </div>
+                <div class="creator-sec">
+                    {{temp.creator.username}}
+                </div>
+                <div class="partner-sec">
+                    {% for p in temp.partner.all %}
+                    <div>{{ p.username }}</div>
+                    {% endfor %}
+                </div>
+                <div class="time-sec">
+                    {{temp.updated_at|date:"Y/m/d H:i:s"}}
+                </div>
+            </div>
+            <div class="conf-bar">
+                <div class="conf-wrap">
+                    <div class="delete" onclick="deleteDocs('{{doc.pk}}')">
+                        삭제
+                    </div>
+                    <a class="download" href="{{ doc.docs.url }}" download>
+                        다운로드
+                    </a>
+                </div>
+            </div>
+        {% endfor %} 
+        {% else %}
+            <div class='docs-list'>
+                결과없음
+            </div>
+        {% endif %}
+    </div>
+
+    <div id="new_template">
+        <a href="{% url 'document:create_own_template' %}">새 템플릿</a>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+    showDelete = ele => {
+        $(ele).next().toggle(200);
+    }
+    deleteDocs = pk => {
+        //var url = "/document/docs/" + pk + "/del/";
+        //window.location.href = url;
+    }
+</script>
+{% endblock %}

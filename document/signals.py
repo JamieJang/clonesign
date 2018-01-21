@@ -1,8 +1,9 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.conf import settings
+from django.core.mail import EmailMessage
 
 import os
-from django.core.mail import EmailMessage
 
 from . import models
 
@@ -25,4 +26,12 @@ def change_upload_docs(sender,**kwargs):
         for partner in partners:
             emails.append(partner.email)
         EmailMessage('새로운 계약서', message, to=emails).send()
+
+@receiver(post_save, sender=models.Template)
+def change_temp_to_docs(sender,**kwargs):
+    template = kwargs['instance']
+    os.system("wkhtmltopdf --dpi 480 http://localhost:8000/document/own_template/{} {}/templates/{}.pdf"
+        .format(template.pk, settings.MEDIA_ROOT, template.title))
+    
+
     

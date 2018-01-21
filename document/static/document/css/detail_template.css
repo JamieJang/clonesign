@@ -1,0 +1,26 @@
+html,body{
+    width: 21cm;
+    height: 29.5cm;
+}
+.wrap{
+    width:21cm;
+    height:29cm;
+    margin: auto;
+    text-align: center;
+}
+
+.content{
+    width: 21cm;
+    height: 15cm;
+    padding-top: 5cm;
+}
+.creator{
+    width: 21cm;
+    height: 3cm;
+    padding-top: 1.5cm;
+}
+.partner{
+    width: 21cm;
+    height: 3cm;
+    padding-top: 1.5cm;
+}

@@ -16,4 +16,7 @@ urlpatterns =[
     url(r'^userinfo/$',views.ChangeUsername.as_view(), name="userinfo"),
     url(r'^password/$',views.ChangePassword.as_view(),name="change_password"),
     url(r'^docs/(?P<pk>\d+)/del/$',views.DeleteDocs.as_view(),name="delete_docs"),
+    url(r'^own_template/$',views.OwnTemplate.as_view(), name="own_template"),
+    url(r'^own_template/create/$',views.CreateOwnTemplate.as_view(), name="create_own_template"),
+    url(r'^own_template/(?P<pk>\d+)/$',views.DetailOwnTemplate.as_view(), name="detail_own_template"),
 ]

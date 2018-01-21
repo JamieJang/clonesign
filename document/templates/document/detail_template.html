@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>{{ temp.title }}</title>
+    <link rel="stylesheet" href="{% static 'document/css/detail_template.css' %}" />
+<body>
+    <div class="wrap">
+        <div class="content">
+            {{ temp.content | linebreaks }}
+        </div>
+        <div class="creator">
+            <div class="name">
+                이름 : {{ temp.creator.username }}
+            </div>
+        </div>
+        <div class="partner">
+            <div class="name">
+                {% for p in temp.partner.all %}
+                이름 : {{ p.username }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>  
+</body>
+</html>

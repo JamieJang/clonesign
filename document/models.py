@@ -47,3 +47,18 @@ class Document(Timestamp):
         name = name.split(".")[0]
         self.filename = name.encode()
         super(Document,self).save()
+
+    class Meta:
+        ordering = ['-updated_at']
+
+class Template(Timestamp):
+    title = models.CharField(max_length=140)
+    content = models.TextField()
+    creator = models.ForeignKey(user_models.MyUser, on_delete=models.CASCADE, related_name="temp_myself")
+    partner = models.ManyToManyField(user_models.MyUser, related_name="temp_partners")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['-updated_at']

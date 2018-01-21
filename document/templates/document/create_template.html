@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>{{user.username}} 템플릿</title>
+
+    <link rel="stylesheet" href="{% static 'document/css/create_template.css' %}" />
+</head>
+<body>
+    <div class="template-box">
+        <form method="POST">
+            {% csrf_token %}
+            <label>계약서 이름</label>
+            <input type="text" name="title" id="title" />
+            
+            <label>계약서 내용</label>
+            <textarea type="text" name="content" id="content" ></textarea>
+
+            <label>서명 요청자</label>
+            <input type="text" name="name" value="{{ user.username }}" disabled id="name" />
+            <input type="email" name="email" value="{{ user.email }}" disabled id="email" />
+
+            <label>서명 참가자</label>
+            <input type="text" name="partner_name" placeholder="이름" id="partner-name" />
+            <input type="email" name="partner_email" placeholder="이메일" id="partner-name" />
+
+            <input type="submit" value="만들기" />
+        </form>
+        <div class="messages">
+            {% if messages %} {% for message in messages %}
+            <span class="{{ message.tags }}">{{ message }}</span>
+            {% endfor %} {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>
