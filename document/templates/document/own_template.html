@@ -55,10 +55,10 @@
             </div>
             <div class="conf-bar">
                 <div class="conf-wrap">
-                    <div class="delete" onclick="deleteDocs('{{doc.pk}}')">
+                    <div class="delete" onclick="deleteDocs('{{temp.pk}}')">
                         삭제
                     </div>
-                    <a class="download" href="{{ doc.docs.url }}" download>
+                    <a class="download" href="{{ temp.filepath }}" download>
                         다운로드
                     </a>
                 </div>
@@ -83,8 +83,8 @@
         $(ele).next().toggle(200);
     }
     deleteDocs = pk => {
-        //var url = "/document/docs/" + pk + "/del/";
-        //window.location.href = url;
+        var url = "/document/own_template/" + pk + "/del/";
+        window.location.href = url;
     }
 </script>
 {% endblock %}

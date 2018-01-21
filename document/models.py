@@ -56,6 +56,7 @@ class Template(Timestamp):
     content = models.TextField()
     creator = models.ForeignKey(user_models.MyUser, on_delete=models.CASCADE, related_name="temp_myself")
     partner = models.ManyToManyField(user_models.MyUser, related_name="temp_partners")
+    filepath = models.CharField(max_length=150,blank=True)
 
     def __str__(self):
         return self.title

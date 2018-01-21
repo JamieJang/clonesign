@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.conf import settings
 from django.core.mail import EmailMessage
@@ -32,6 +32,16 @@ def change_temp_to_docs(sender,**kwargs):
     template = kwargs['instance']
     os.system("wkhtmltopdf --dpi 480 http://localhost:8000/document/own_template/{} {}/templates/{}.pdf"
         .format(template.pk, settings.MEDIA_ROOT, template.title))
-    
+    file = os.path.join(settings.MEDIA_URL, 'templates', template.title+".pdf")
+    if not template.filepath:
+        template.filepath = file
+        template.save()
+
+@receiver(post_delete,sender=models.Template)
+def delete_temp(sender,**kwargs):
+    template = kwargs['instance']
+    filepath = os.path.join(settings.MEDIA_ROOT,'templates',template.title+".pdf")
+    os.system("rm -rf {}".format(filepath))
+
 
     

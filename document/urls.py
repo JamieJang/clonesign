@@ -19,4 +19,5 @@ urlpatterns =[
     url(r'^own_template/$',views.OwnTemplate.as_view(), name="own_template"),
     url(r'^own_template/create/$',views.CreateOwnTemplate.as_view(), name="create_own_template"),
     url(r'^own_template/(?P<pk>\d+)/$',views.DetailOwnTemplate.as_view(), name="detail_own_template"),
+    url(r'^own_template/(?P<pk>\d+)/del/$',views.DeleteTemplate.as_view(), name="delete_template"),
 ]

@@ -288,4 +288,14 @@ class DetailOwnTemplate(View):
         return render(request, 'document/detail_template.html', {"temp": temp})
         
 
+class DeleteTemplate(View):
+    def get(self,request,pk):
+        user = request.user
+        try:
+            temp = models.Template.objects.get(pk=pk)
+            if temp.creator == user:
+                temp.delete()
+            return redirect("document:own_template")
+        except models.Template.DoesNotExist:
+            return redirect("document:own_template")
         
