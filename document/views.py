@@ -217,3 +217,16 @@ class ChangePassword(View):
                                                          'part_docs': part_docs,
                                                          'user': user,
                                                          'password_form': password_form})
+
+class DeleteDocs(View):
+    def get(self,request,pk):
+        user = request.user
+        doc = models.Document.objects.get(pk=pk)
+        if doc.creator == user:
+            filename = doc.filename
+            doc.delete()
+            messages.success(request,"Complete delete {}".format(filename))
+            return redirect("document:docu-index")
+        else:
+            messages.error(request, "No Authorization")
+            return redirect("document:docu-index")

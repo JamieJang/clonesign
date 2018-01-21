@@ -24,6 +24,12 @@
         </div>
     </div>
 
+    {% if messages %}
+        {% for msg in messages %}
+        <span class="{{ message.tags }}">{{ message }}</span>
+        {% endfor %}
+    {% endif %}
+
     <div class="docs-table">
         <div class="docs-list section">
             <div class="state-sec">
@@ -47,7 +53,7 @@
         </div>
         {% if docs %}
             {% for doc in docs %}
-            <div class="docs-list">
+            <div class="docs-list" onclick="showDelete(this)">
                 <div class="state-sec">
                     {{doc.status}}
                 </div>
@@ -71,7 +77,18 @@
                     {{doc.updated_at|date:"Y/m/d H:i:s"}}
                 </div>
             </div>
+            <div class="conf-bar">
+                <div class="conf-wrap">
+                    <div class="delete" onclick="deleteDocs('{{doc.pk}}')">
+                        삭제
+                    </div>
+                    <a class="download" href="{{ doc.docs.url }}" download>
+                        다운로드
+                    </a>
+                </div>
+            </div>
             {% endfor %}
+            
         {% else %}
             <div class='docs-list'>
                 결과없음
@@ -98,5 +115,12 @@
             window.location.href = url;
         }
     });
+    showDelete = ele => {
+        $(ele).next().toggle(200);
+    }
+    deleteDocs = pk => {
+        var url = "/document/docs/" + pk + "/del/";
+        window.location.href = url;
+    }
 </script>
 {% endblock %}

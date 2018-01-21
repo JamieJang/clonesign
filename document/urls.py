@@ -15,4 +15,5 @@ urlpatterns =[
     url(r'^profile/$',views.Profile.as_view(),name="profile"),
     url(r'^userinfo/$',views.ChangeUsername.as_view(), name="userinfo"),
     url(r'^password/$',views.ChangePassword.as_view(),name="change_password"),
+    url(r'^docs/(?P<pk>\d+)/del/$',views.DeleteDocs.as_view(),name="delete_docs"),
 ]
