@@ -14,7 +14,7 @@ def change_upload_docs(sender,**kwargs):
     docs_path = '/'.join(origin.split('/')[:-1])
     if origin.split(".")[1] != 'pdf':    
         os.system("/Applications/LibreOffice.app/Contents/MacOS/soffice --convert-to pdf --outdir {} {}".format(docs_path, origin))
-        conv = origin.split(".")[0] + ".pdf"        
+        conv = origin.split(".")[0] + ".pdf"
         document.docs = "/".join(conv.split("/")[-6:])
         document.save()
 

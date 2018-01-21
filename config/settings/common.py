@@ -85,8 +85,6 @@ DATABASES = {
     }
 }
 
-DATABASE_OPTIONS = {'charset': 'utf8'}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -143,3 +141,7 @@ SERVER_EMAIL = 'jamiejang0891@gmail.com'
 DEFAULT_FROM_MAIL = 'django_Developer'
 
 LOGIN_REDIRECT_URL = 'document:docu-index'
+
+
+DEFAULT_CHARSET = "utf-8"
+FILE_CHARSET = 'utf-8'

@@ -6,6 +6,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 
+from operator import attrgetter
+
 from . import models, forms
 from user import models as user_models
 
@@ -21,6 +23,8 @@ class index(View):
         total_docs = self_docs + part_docs
         docs = list(models.Document.objects.filter(creator=user))
         docs += list(user.docs_by_partners.all())
+
+        docs = sorted(docs, key=attrgetter("created_at"), reverse=True)
 
         default_status = "모든상태"
         status_list = [ x[0] for x in models.Document.STATUS_LIST]
@@ -71,7 +75,7 @@ class selfDocs(View):
         self_docs = user.self_docs_count
         part_docs = user.part_docs_count
         total_docs = self_docs + part_docs
-        docs = models.Document.objects.filter(creator=user)
+        docs = models.Document.objects.filter(creator=user).order_by("-created_at")
 
         status_list = [x[0] for x in models.Document.STATUS_LIST]
         default_status = "모든상태"
@@ -92,7 +96,7 @@ class docsByPartner(View):
         self_docs = user.self_docs_count
         part_docs = user.part_docs_count
         total_docs = self_docs + part_docs
-        docs = user.docs_by_partners.all()
+        docs = user.docs_by_partners.all().order_by("-created_at")
 
         status_list = [x[0] for x in models.Document.STATUS_LIST]
         default_status = "모든상태"
@@ -114,6 +118,8 @@ class docsByStatus(View):
         total_docs = self_docs + part_docs
         docs = list(models.Document.objects.filter(creator=user, status=status))
         docs += list(user.docs_by_partners.all().filter(status=status))
+
+        docs = sorted(docs, key=attrgetter("created_at"), reverse=True)
 
         default_status = status
         status_list = [x[0] for x in models.Document.STATUS_LIST if x[0] != default_status]
@@ -138,7 +144,7 @@ class docsByKeyword(View):
         docs += list(user.docs_by_partners.all().filter(Q(partners__username__icontains=keyword) |
                                                         Q(creator__username__icontains=keyword) | Q(filename__icontains=keyword)).distinct())
 
-        print(keyword);
+        docs = sorted(docs, key=attrgetter("created_at"), reverse=True)
 
         default_status = "모든상태"
         status_list = [x[0] for x in models.Document.STATUS_LIST]
@@ -176,9 +182,7 @@ class ChangeUsername(View):
 
         new_username = request.POST['username']
         if new_username:
-            print(user.username)
             user.username = new_username
-            print(user.username)
             user.save()
             messages.success(request, "이름을 성공적으로 변경하였습니다.")
             return redirect("document:profile")

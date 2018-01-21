@@ -21,7 +21,6 @@ class Folder(Timestamp):
 class Document(Timestamp):
     def generate_filename(self,filename):
         today = datetime.today()
-        print("filename:",filename)
         return "document/{}/{}/{}/{}/{}".format(self.creator.username, today.year, today.month, today.day, filename)
 
     STATUS_LIST = (
@@ -45,5 +44,6 @@ class Document(Timestamp):
 
     def save(self):
         name = self.docs.name.split('/')[-1]
-        self.filename = name
+        name = name.split(".")[0]
+        self.filename = name.encode()
         super(Document,self).save()
