@@ -30,9 +30,10 @@ def change_upload_docs(sender,**kwargs):
 @receiver(post_save, sender=models.Template)
 def change_temp_to_docs(sender,**kwargs):
     template = kwargs['instance']
+    title = template.title.strip().replace(" ","-")
     os.system("wkhtmltopdf --dpi 480 http://localhost:8000/document/own_template/{} {}/templates/{}.pdf"
-        .format(template.pk, settings.MEDIA_ROOT, template.title))
-    file = os.path.join(settings.MEDIA_URL, 'templates', template.title+".pdf")
+        .format(template.pk, settings.MEDIA_ROOT, title))
+    file = os.path.join(settings.MEDIA_URL, 'templates', title+".pdf")
     if not template.filepath:
         template.filepath = file
         template.save()
@@ -40,7 +41,8 @@ def change_temp_to_docs(sender,**kwargs):
 @receiver(post_delete,sender=models.Template)
 def delete_temp(sender,**kwargs):
     template = kwargs['instance']
-    filepath = os.path.join(settings.MEDIA_ROOT,'templates',template.title+".pdf")
+    title = template.title.strip().replace(" ","-")
+    filepath = os.path.join(settings.MEDIA_ROOT,'templates',title+".pdf")
     os.system("rm -rf {}".format(filepath))
 
 
