@@ -31,7 +31,7 @@ def change_upload_docs(sender,**kwargs):
 def change_temp_to_docs(sender,**kwargs):
     template = kwargs['instance']
     title = template.title.strip().replace(" ","-")
-    os.system("wkhtmltopdf --dpi 480 http://localhost:8000/document/own_template/{} {}/templates/{}.pdf"
+    os.system("wkhtmltopdf --dpi 480 http://localhost:8080/document/own_template/{}/ {}/templates/{}.pdf"
         .format(template.pk, settings.MEDIA_ROOT, title))
     file = os.path.join(settings.MEDIA_URL, 'templates', title+".pdf")
     if not template.filepath:

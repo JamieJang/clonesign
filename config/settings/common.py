@@ -141,8 +141,7 @@ EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 SERVER_EMAIL = 'jamiejang0891@gmail.com'
 DEFAULT_FROM_MAIL = 'django_Developer'
 
-LOGIN_REDIRECT_URL = 'document:docu-index'
-
+LOGIN_REDIRECT_URL = '/'
 
 DEFAULT_CHARSET = "utf-8"
 FILE_CHARSET = 'utf-8'

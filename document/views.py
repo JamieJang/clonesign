@@ -50,7 +50,6 @@ class UploadDocs(View):
 
     def post(self,request):
         docs = request.FILES['docs']
-        print("docs:",docs, "type:",type(docs))
         user = request.user
         new_docs = models.Document(creator=user, docs=docs)
         new_docs.save()
